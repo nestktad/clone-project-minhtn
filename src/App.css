@@ -57,20 +57,25 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5); 
   padding: 20px;
   width: fit-content;
-  border: 1px solid #ccc;
   margin: auto; 
-  margin-top: 50px; 
+  margin-top: 50px;
+  backdrop-filter: blur(5px); 
+  border-radius: 10px; 
+  opacity: 90%;
 }
 
 .icons img {
   width: 100px;
   height: 100px;
-  object-fit: contain; 
+  object-fit: contain;
   display: block;
+  border-radius: 10px; 
+  padding: 5px; 
 }
+
 
 
 
@@ -90,4 +95,79 @@
   to {
      transform: translateY(-100%);
   }
+}
+
+.loading-bar-container {
+  width: 100%;
+  height: 25px; 
+  margin-bottom: 10px;
+  overflow: hidden;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  border-radius: 10px; 
+  position: relative;
+}
+
+.loading-bar {
+  width: 100%;
+  height: 100%;
+  background-color: green;
+  position: absolute;
+  top: 0;
+  right: 100%; /* Start from the right */
+  animation: loadingAnimation 2s linear infinite;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    right: 100%;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+.loading-percentage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+.selection-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #333;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px; 
+}
+
+.icon-item {
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.icon-item img {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-item:hover {
+  transform: scale(1.2);
+}
+
+.icon-item.selected {
+  border: 2px solid green;
+  border-radius: 50%;
 }

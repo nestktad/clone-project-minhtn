@@ -1,39 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SelectorBar from './SelectorBar';
 
 export default function HomePage() {
    const [phoneNumber, setPhoneNumber] = useState("");
    const [softwareCode, setSoftwareCode] = useState("");
    const [position, setPosition] = useState(null);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setPosition({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            });
-          },
-          (error) => {
-            console.error('Error getting geolocation:', error);
-          }
-        );
+         navigator.geolocation.getCurrentPosition(
+            (position) => {
+               setPosition({
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude
+               });
+            },
+            (error) => {
+               console.error('Error getting geolocation:', error);
+            }
+         );
       } else {
-        console.error('Geolocation is not supported by this browser.');
+         console.error('Geolocation is not supported by this browser.');
       }
-    }, []);
+   }, []);
 
    const onSubmitForm = (e) => {
       e.preventDefault();
+
       localStorage.setItem('softwareCode', softwareCode);
+      localStorage.setItem('phoneNumber', phoneNumber);
       localStorage.setItem('position', JSON.stringify(position));
-      if(localStorage.getItem('softwareCode') === "12345") {
-         window.location.href = '/';
-   }else{
-      alert('Mã không tồn tại !!!');
-   }
+      if (localStorage.getItem('softwareCode') === "12345") {
+         setLoading(true);
+
+      } else {
+         alert('Mã không tồn tại !!!');
+      }
+
+      setTimeout(() => {
+         setLoading(false);
+         // Handle form submission
+      }, 2000);
    }
 
 
@@ -41,8 +51,8 @@ export default function HomePage() {
       <div className="App-background d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
          <div className="text-center">
             <h1 className="text-white">UY TÍN - NHANH CHÓNG - BẢO MẬT</h1>
-
-            <div className="p-4 bg-white rounded shadow" style={{ maxWidth: '750px', width: '100%' }}>
+            <SelectorBar/>
+            <div className="p-4 bg-white rounded shadow" style={{ maxWidth: '750px', width: '100%' }}>              
                <h3 className="text-center mb-4 text-black">ĐĂNG NHẬP HỆ THỐNG</h3>
                <Form onSubmit={onSubmitForm}>
                   <Form.Group className="mb-3" controlId="phoneNumber">
@@ -87,7 +97,11 @@ export default function HomePage() {
                      <Form.Label className="text-danger strong">MÃ PHẦN MỀM - NHẬN TẠI HOTLINE/ZALO: ADMIN</Form.Label>
                      <Form.Control type="text" placeholder="Nhập mã phần mềm" value={softwareCode} onChange={(e) => setSoftwareCode(e.target.value)} />
                   </Form.Group>
-
+                  {loading && (
+                     <div className="loading-bar-container">
+                        <div className="loading-bar"></div>
+                     </div>
+                  )}
                   <Button variant="primary" type="submit" className="w-100">ĐĂNG NHẬP</Button>
                </Form>
 
@@ -98,6 +112,14 @@ export default function HomePage() {
                   <p className="text-success mb-1">Tài khoản: 0912.757.xxx Đã Kích Hoạt Thành Công</p>
                   <p className="text-success mb-1">Tài khoản: 0913.825.xxx Đã Kích Hoạt Thành Công</p>
                   <p className="text-success mb-1">Tài khoản: 0824.175.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0967.785.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0916.145.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0967.785.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0916.145.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0967.785.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0916.145.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0967.785.xxx Đã Kích Hoạt Thành Công</p>
+                  <p className="text-success mb-1">Tài khoản: 0916.145.xxx Đã Kích Hoạt Thành Công</p>
                   <p className="text-success mb-1">Tài khoản: 0967.785.xxx Đã Kích Hoạt Thành Công</p>
                   <p className="text-success mb-1">Tài khoản: 0916.145.xxx Đã Kích Hoạt Thành Công</p>
                </div>
